@@ -33,7 +33,7 @@ class Page extends Component {
           <Meta />
           <Header />
           <Inner>
-            <p>Hei im page</p>
+            <p>Hei Im page</p>
           </Inner>
           {this.props.children}
         </StyledPage>
