@@ -2,11 +2,13 @@
   "plugins": [
     "stylelint-order"
   ],
+  "processors": ["stylelint-processor-styled-components"],
   "extends": [
     "stylelint-config-standard",
-    "./node_modules/prettier-stylelint/config.js"
+    "./node_modules/prettier-stylelint/config.js",
+     "stylelint-config-styled-components"
   ],
-
+"syntax": "scss",
   "rules": {
     "order/order": [
       "custom-properties",
