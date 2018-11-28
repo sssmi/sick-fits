@@ -63,9 +63,7 @@ class Page extends Component {
         <StyledPage>
           <Meta />
           <Header />
-          <Inner>
-            <p>Hei Im page</p>
-          </Inner>
+          <Inner />
           {this.props.children}
         </StyledPage>
       </ThemeProvider>

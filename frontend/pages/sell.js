@@ -1,9 +1,10 @@
 import React from 'react';
+import CreateItem from '../components/CreateItem';
 
-class Home extends React.Component {
+class Sell extends React.Component {
   render() {
-    return <p>sell!</p>;
+    return <CreateItem />;
   }
 }
 
-export default Home;
+export default Sell;
