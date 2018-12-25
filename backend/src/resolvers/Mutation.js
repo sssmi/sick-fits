@@ -10,6 +10,26 @@ const Mutations = {
     );
     return item;
   },
+  updateItem(parent, args, ctx, info) {
+    // Take the copy of the updates
+    const updates = { ...args };
+
+    // Remove the ID from the updates
+    delete updates.id;
+
+    // Run the update method
+    // Where id === args.id
+    return ctx.db.mutation.updateItem(
+      {
+        data: updates,
+        where: {
+          id: args.id,
+        },
+      },
+      // This 'info' is the item that will be returned to the client
+      info
+    );
+  },
 
   // createDog(parent, args, ctx, info) {
   //   global.dogs = global.dogs || [];
