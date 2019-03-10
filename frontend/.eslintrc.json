@@ -47,7 +47,7 @@
     "no-unused-expressions": [
       "error",
       {
-        "allowShortCircuit": true
+        // "allowShortCircuit": true
       }
     ]
   }
