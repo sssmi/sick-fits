@@ -1,5 +1,9 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const createToken = id => {
+  return jwt.sign({ userId: id }, process.env.APP_SECRET);
+};
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
@@ -43,28 +47,52 @@ const Mutations = {
   },
 
   async signup(parent, args, ctx, info) {
-    args.email = args.email.toLowerCase()
+    args.email = args.email.toLowerCase();
 
     // Hash their password
-    const password = await bcrypt.hash(args.password, 10)
-    const user = await ctx.db.mutation.createUser({
-      data: {
-        ...args,
-        password,
-        permissions: { set: ['USER'] }
-      }
-    }, info)
+    const password = await bcrypt.hash(args.password, 10);
+    const user = await ctx.db.mutation.createUser(
+      {
+        data: {
+          ...args,
+          password,
+          permissions: { set: ['USER'] },
+        },
+      },
+      info
+    );
     // Create JWT
-    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    const token = createToken(user.id);
 
     // Set the jwt as a cookie on the response
     ctx.response.cookie('token', token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365
-    })
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
     // Return the user to the browser
-    return user
-  }
+    return user;
+  },
+
+  async signin(parent, { email, password }, ctx, info) {
+    // Check if there is user with that email
+    const user = await ctx.db.query.user({ where: { email } });
+    if (!user) throw new Error('No such user found for ' + email);
+
+    // Check if password is correct
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) throw new Error('Invalid password!');
+
+    // Generate jwt token
+    const token = createToken(user.id);
+
+    // Set the cookie with the token
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
+    // Return the user
+    return user;
+  },
 
   // createDog(parent, args, ctx, info) {
   //   global.dogs = global.dogs || [];

@@ -20,7 +20,7 @@ const User = props => (
 );
 
 // eslint-disable-next-line react/no-typos
-User.PropTypes = {
+User.propTypes = {
   children: func.isRequired,
 };
 
