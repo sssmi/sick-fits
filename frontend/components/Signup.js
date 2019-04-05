@@ -26,7 +26,7 @@ class Signup extends Component {
 
   render() {
     return (
-      <Mutation mutation={SIGNUP_MUTATION} variables={{ password: this.state }}>
+      <Mutation mutation={SIGNUP_MUTATION} variables={this.state}>
         {(signup, { error, loading }) => (
           <Form
             method="post"
@@ -73,7 +73,7 @@ class Signup extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-              <button type="submit">Signup</button>
+              <button type="submit">Sign Up!</button>
             </fieldset>
           </Form>
         )}
