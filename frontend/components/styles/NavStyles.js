@@ -9,6 +9,7 @@ const NavStyles = styled.ul`
   a,
   button {
     padding: 1rem 3rem;
+    color: ${props => props.theme.black};
     display: flex;
     align-items: center;
     position: relative;

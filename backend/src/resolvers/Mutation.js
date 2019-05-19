@@ -94,6 +94,11 @@ const Mutations = {
     return user;
   },
 
+  signout(parent, args, ctx, info) {
+    ctx.response.clearCookie('token');
+    return { message: 'Goodbye!' };
+  },
+
   // createDog(parent, args, ctx, info) {
   //   global.dogs = global.dogs || [];
   //   const newDog = { name: args.name };
